@@ -5,6 +5,7 @@ public abstract class Product {
     private Long productId;
     private String name;
     private String category;
+    private String imgUrl;
     private Double rating;
     private Double price;
     private int quantity;
@@ -55,5 +56,13 @@ public abstract class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }
