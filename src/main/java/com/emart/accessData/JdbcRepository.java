@@ -16,7 +16,7 @@ public class JdbcRepository {
 	
 	public List<User> findAllUsers() {
 	    
-        String sql = "SELECT * FROM User";
+        String sql = "SELECT * FROM user_emart";
         List<User> users = jdbcTemplate.query(sql,new UserRowMapper());
         return users;
         
@@ -25,7 +25,7 @@ public class JdbcRepository {
 	
 	public void insertUser(User user){
         
-        String sql = "INSERT INTO User (name, email, password, type,location) VALUES (?, ?, ?,?,?)";
+        String sql = "INSERT INTO user_emart (username, email, password, type,location) VALUES (?, ?, ?,?,?)";
                                  
         jdbcTemplate.update(sql, new Object[] { user.getName(),user.getEmail(),user.getPassword(),user.getType(),user.getLocation()});
                 
