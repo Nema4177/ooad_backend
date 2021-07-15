@@ -2,6 +2,7 @@ package com.emart.service;
 
 import java.util.List;
 
+import com.emart.accessData.Category;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,12 +85,12 @@ public class EmartService {
 
 	public JSONObject getCategories() {
 		JSONArray categories = new JSONArray();
-		categories.add("Electronics");
-		categories.add("Books");
-		categories.add("Clothes");
-		categories.add("Groceries");
-		categories.add("Outdoor");
-		categories.add("Pets");
+		categories.add(new Category("Electronics", 1, "https://image.flaticon.com/icons/png/512/2777/2777154.png"));
+		categories.add(new Category("Books", 1, "https://image.flaticon.com/icons/png/512/2232/2232688.png"));
+		categories.add(new Category("Clothes", 1, "https://image.flaticon.com/icons/png/512/2331/2331716.png"));
+		categories.add(new Category("Groceries", 1, "https://image.flaticon.com/icons/png/512/1261/1261126.png"));
+		categories.add(new Category("Outdoor", 1, "https://image.flaticon.com/icons/png/512/1752/1752764.png"));
+		categories.add(new Category("Pets", 1, "https://image.flaticon.com/icons/png/512/1344/1344623.png"));
 
 		
 		JSONObject response = new JSONObject();
