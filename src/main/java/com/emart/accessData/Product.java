@@ -6,8 +6,8 @@ public abstract class Product {
     private String name;
     private String category;
     private String imgUrl;
-    private Double rating;
-    private Double price;
+    private double rating;
+    private double price;
     private int quantity;
 
     public Long getProductId() {
@@ -34,19 +34,19 @@ public abstract class Product {
         this.category = category;
     }
 
-    public Double getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

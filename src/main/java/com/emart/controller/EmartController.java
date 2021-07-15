@@ -1,6 +1,7 @@
 package com.emart.controller;
 
 import com.emart.accessData.Product;
+import com.emart.accessData.ProductFactory;
 import com.emart.accessData.User;
 import com.emart.service.EmartService;
 import org.json.simple.JSONObject;
@@ -48,8 +49,16 @@ public class EmartController {
     }
 
     @PostMapping(path = "/addProduct")
-    public ResponseEntity<JSONObject> addProduct(@RequestBody Product product) {
+    public ResponseEntity<JSONObject> addProduct(@RequestBody JSONObject jsonObject) {
 
+        String category = (String) jsonObject.get("category");
+
+        Product product = new ProductFactory().getProduct(category);
+        product.setName((String) jsonObject.get("name"));
+        product.setCategory(category);
+        product.setPrice((double) jsonObject.get("price"));
+        product.setQuantity((int) jsonObject.get("quantity"));
+        product.setRating((double) jsonObject.get("rating"));
         JSONObject response = emartService.addProduct(product);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
