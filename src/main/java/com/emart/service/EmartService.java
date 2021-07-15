@@ -30,7 +30,7 @@ public class EmartService {
 				response.put(Constants.response_message_key, "success");
 				response.put("userId", user.getUserId());
 				response.put("username", user.getName());
-				response.put("password", user.getPassword());
+				response.put("type", user.getType());
 				response.put("location", user.getLocation());
 				response.put("email", user.getEmail());
 				return response;
@@ -49,7 +49,6 @@ public class EmartService {
 			response.put(Constants.response_status_key, "success");
 			response.put(Constants.response_message_key, "success");
 			response.put("username", user.getName());
-			response.put("password", user.getPassword());
 		}catch(Exception e) {
 			response.put(Constants.response_status_key, "failure");
 			response.put(Constants.response_message_key, e.getMessage());
@@ -87,8 +86,11 @@ public class EmartService {
 		JSONArray categories = new JSONArray();
 		categories.add("Electronics");
 		categories.add("Books");
-		categories.add("Clothing");
-		categories.add("Home Appliances");
+		categories.add("Clothes");
+		categories.add("Groceries");
+		categories.add("Outdoor");
+		categories.add("Pets");
+
 		
 		JSONObject response = new JSONObject();
 		response.put("categories", categories);
