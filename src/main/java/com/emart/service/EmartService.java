@@ -60,16 +60,12 @@ public class EmartService {
         JSONObject response = new JSONObject();
 
         List<Product> resultList = jdbcRepository.getProducts(category);
-        for (Product product : resultList) {
+        if (resultList != null && !resultList.isEmpty()) {
+            JSONArray products = new JSONArray();
+            products.addAll(resultList);
             response.put(Constants.response_status_key, "success");
             response.put(Constants.response_message_key, "success");
-            response.put("productId", product.getProductId());
-            response.put("name", product.getName());
-			response.put("category", product.getCategory());
-            response.put("price", product.getPrice());
-            response.put("imageUrl", product.getImgUrl());
-            response.put("quantity", product.getQuantity());
-            response.put("rating", product.getRating());
+            response.put("products", products);
             return response;
         }
         response.put(Constants.response_status_key, "failure");
@@ -79,7 +75,6 @@ public class EmartService {
 
     public JSONObject addProduct(Product product) {
 		JSONObject response = new JSONObject();
-
 		try {
 			jdbcRepository.insertProduct(product);
 			response.put(Constants.response_status_key, "success");
