@@ -49,7 +49,7 @@ public class EmartController {
     }
 
     @PostMapping(path = "/addProduct")
-    public ResponseEntity<JSONObject> addProduct(@RequestBody JSONObject jsonObject) {
+    public ResponseEntity<JSONObject> addProduct(@RequestParam String username, @RequestBody JSONObject jsonObject) {
 
         String category = (String) jsonObject.get("category");
 
@@ -60,6 +60,36 @@ public class EmartController {
         product.setQuantity((int) jsonObject.get("quantity"));
         product.setRating((double) jsonObject.get("rating"));
         JSONObject response = emartService.addProduct(product);
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/removeProduct")
+    public ResponseEntity<JSONObject> removeProduct(@RequestParam String username, @RequestBody JSONObject jsonObject) {
+
+        long productId = Long.parseLong((String) jsonObject.get("productId"));
+        int quantity = (int) jsonObject.get("quantity");
+
+        JSONObject response = emartService.removeProduct(productId, quantity);
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/changePrice")
+    public ResponseEntity<JSONObject> changePrice(@RequestParam String username, @RequestBody JSONObject jsonObject) {
+
+        long productId = Long.parseLong((String) jsonObject.get("productId"));
+        double price = (double) jsonObject.get("price");
+
+        JSONObject response = emartService.changePrice(productId, price);
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/changeQuantity")
+    public ResponseEntity<JSONObject> changeQuantity(@RequestParam String username, @RequestBody JSONObject jsonObject) {
+
+        long productId = Long.parseLong((String) jsonObject.get("productId"));
+        int quantity = (int) jsonObject.get("quantity");
+
+        JSONObject response = emartService.changeQuantity(productId, quantity);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
 

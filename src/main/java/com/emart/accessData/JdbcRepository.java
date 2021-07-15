@@ -45,4 +45,35 @@ public class JdbcRepository {
                 product.getRating(), product.getPrice(), product.getQuantity());
 
     }
+
+    public void removeProduct(Long productId, int quantity) {
+
+        String sql = "SELECT * FROM product_emart WHERE productid ="+productId;
+        List<Product> product = jdbcTemplate.query(sql, new ProductRowMapper());
+        String sql1;
+        if (!product.isEmpty()) {
+            if (product.get(0).getQuantity() <= quantity) {
+                sql1 = "DELETE FROM product_emart WHERE productid ="+productId;
+                jdbcTemplate.update(sql1);
+            } else {
+                changeQuantity(productId, quantity);
+            }
+        }
+    }
+
+    public void changePrice(Long productId, double price) {
+
+        String sql = "UPDATE product_emart SET price="+price+" WHERE productid ="+productId;
+
+        jdbcTemplate.update(sql);
+
+    }
+
+    public void changeQuantity(Long productId, int quantity) {
+
+        String sql = "UPDATE product_emart SET quantity="+quantity+" WHERE productid ="+productId;
+
+        jdbcTemplate.update(sql);
+
+    }
 }

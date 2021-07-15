@@ -101,6 +101,45 @@ public class EmartService {
         return response;
     }
 
+    public JSONObject removeProduct(Long productId, int quantity) {
+        JSONObject response = new JSONObject();
+        try {
+            jdbcRepository.removeProduct(productId, quantity);
+            response.put(Constants.response_status_key, "success");
+            response.put(Constants.response_message_key, "product removed");
+        } catch (Exception e) {
+            response.put(Constants.response_status_key, "failure");
+            response.put(Constants.response_message_key, e.getMessage());
+        }
+        return response;
+    }
+
+    public JSONObject changePrice(Long productId, double price) {
+        JSONObject response = new JSONObject();
+        try {
+            jdbcRepository.changePrice(productId, price);
+            response.put(Constants.response_status_key, "success");
+            response.put(Constants.response_message_key, "price changed");
+        } catch (Exception e) {
+            response.put(Constants.response_status_key, "failure");
+            response.put(Constants.response_message_key, e.getMessage());
+        }
+        return response;
+    }
+
+    public JSONObject changeQuantity(Long productId, int quantity) {
+        JSONObject response = new JSONObject();
+        try {
+            jdbcRepository.changeQuantity(productId, quantity);
+            response.put(Constants.response_status_key, "success");
+            response.put(Constants.response_message_key, "product updated");
+        } catch (Exception e) {
+            response.put(Constants.response_status_key, "failure");
+            response.put(Constants.response_message_key, e.getMessage());
+        }
+        return response;
+    }
+
     private boolean checkUserLogin(String username) {
         List<User> users = EmartSession.getInstance().getActiveUsers();
         for (User user : users) {
