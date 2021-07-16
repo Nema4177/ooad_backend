@@ -109,10 +109,11 @@ public class JdbcRepository {
         if (!cartItems.isEmpty()) {
             sql1 = "UPDATE cart_emart SET quantity="+(cartItem.getQuantity() + cartItems.get(0).getQuantity())+
                     " WHERE productid ="+cartItem.getProductId();
+            jdbcTemplate.update(sql1);
         } else {
             sql1 = "INSERT INTO cart_emart (userid, productid, quantity) VALUES (?, ?, ?)";
+            jdbcTemplate.update(sql1, cartItem.getUserId(), cartItem.getProductId(), cartItem.getQuantity());
         }
-        jdbcTemplate.update(sql1);
 
     }
 
