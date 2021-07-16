@@ -1,4 +1,4 @@
-package com.emart.accessData;
+package com.emart.model;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

@@ -1,8 +1,9 @@
 package com.emart.controller;
 
-import com.emart.accessData.Product;
+import com.emart.model.CartItem;
+import com.emart.model.Product;
 import com.emart.accessData.ProductFactory;
-import com.emart.accessData.User;
+import com.emart.model.User;
 import com.emart.service.EmartService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,4 +94,23 @@ public class EmartController {
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/getCart")
+    public ResponseEntity<JSONObject> getCartItems(@RequestParam String username, @RequestParam Long userId) {
+        JSONObject response = emartService.getCartItems(userId);
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/addToCart")
+    public ResponseEntity<JSONObject> addToCart(@RequestParam String username, @RequestBody CartItem cartItem) {
+
+        JSONObject response = emartService.addToCart(cartItem);
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/removeFromCart")
+    public ResponseEntity<JSONObject> removeFromCart(@RequestParam String username, @RequestBody CartItem cartItem) {
+
+        JSONObject response = emartService.removeFromCart(cartItem.getUserId(), cartItem.getProductId());
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
 }

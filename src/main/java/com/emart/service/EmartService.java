@@ -1,9 +1,7 @@
 package com.emart.service;
 
-import com.emart.accessData.Category;
+import com.emart.model.*;
 import com.emart.accessData.JdbcRepository;
-import com.emart.accessData.Product;
-import com.emart.accessData.User;
 import com.emart.session.EmartSession;
 import com.emart.utils.Constants;
 import org.json.simple.JSONArray;
@@ -131,6 +129,48 @@ public class EmartService {
         JSONObject response = new JSONObject();
         try {
             jdbcRepository.changeQuantity(productId, quantity);
+            response.put(Constants.response_status_key, "success");
+            response.put(Constants.response_message_key, "product updated");
+        } catch (Exception e) {
+            response.put(Constants.response_status_key, "failure");
+            response.put(Constants.response_message_key, e.getMessage());
+        }
+        return response;
+    }
+
+    public JSONObject getCartItems(Long userId) {
+        JSONObject response = new JSONObject();
+        try {
+            JSONArray cartItems = new JSONArray();
+            List<CompleteCartItem> resultList = jdbcRepository.getCartItems(userId);
+            cartItems.addAll(resultList);
+            response.put(Constants.response_status_key, "success");
+            response.put(Constants.response_message_key, "success");
+            response.put("cartItems", cartItems);
+        } catch (Exception e) {
+            response.put(Constants.response_status_key, "failure");
+            response.put(Constants.response_message_key, e.getMessage());
+        }
+        return response;
+    }
+
+    public JSONObject addToCart(CartItem cartItem) {
+        JSONObject response = new JSONObject();
+        try {
+            jdbcRepository.addToCart(cartItem);
+            response.put(Constants.response_status_key, "success");
+            response.put(Constants.response_message_key, "product updated");
+        } catch (Exception e) {
+            response.put(Constants.response_status_key, "failure");
+            response.put(Constants.response_message_key, e.getMessage());
+        }
+        return response;
+    }
+
+    public JSONObject removeFromCart(Long userId, Long productId) {
+        JSONObject response = new JSONObject();
+        try {
+            jdbcRepository.removeFromCart(userId, productId);
             response.put(Constants.response_status_key, "success");
             response.put(Constants.response_message_key, "product updated");
         } catch (Exception e) {

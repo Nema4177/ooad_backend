@@ -2,7 +2,8 @@ package com.emart.session;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.emart.accessData.*;
+
+import com.emart.model.User;
 
 public class EmartSession {
 	

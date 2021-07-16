@@ -1,5 +1,10 @@
 package com.emart.accessData;
 
+import com.emart.model.ClothProduct;
+import com.emart.model.ElectronicProduct;
+import com.emart.model.GroceriesProduct;
+import com.emart.model.Product;
+
 public class ProductFactory {
 
     public Product getProduct(String category) {

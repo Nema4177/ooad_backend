@@ -4,7 +4,7 @@ package com.emart.accessData.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.emart.accessData.User;
+import com.emart.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

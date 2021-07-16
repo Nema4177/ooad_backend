@@ -1,11 +1,17 @@
 package com.emart.accessData;
 
+import com.emart.accessData.mapper.CartRowMapper;
 import com.emart.accessData.mapper.ProductRowMapper;
 import com.emart.accessData.mapper.UserRowMapper;
+import com.emart.model.CartItem;
+import com.emart.model.CompleteCartItem;
+import com.emart.model.Product;
+import com.emart.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -72,6 +78,47 @@ public class JdbcRepository {
     public void changeQuantity(Long productId, int quantity) {
 
         String sql = "UPDATE product_emart SET quantity="+quantity+" WHERE productid ="+productId;
+
+        jdbcTemplate.update(sql);
+
+    }
+
+    public List<CompleteCartItem> getCartItems(Long userId) {
+        String sql = "Select * FROM cart_emart WHERE userid="+userId;
+        List<CartItem> cartItems = jdbcTemplate.query(sql, new CartRowMapper());
+        List<CompleteCartItem> resultItems = new ArrayList<>();
+        for(CartItem item: cartItems) {
+            String sql1 = "Select * FROM product_emart WHERE productid="+item.getProductId();
+            List<Product> product = jdbcTemplate.query(sql1, new ProductRowMapper());
+            resultItems.add(new CompleteCartItem(
+                    item.getProductId(),
+                    item.getQuantity(),
+                    product.get(0).getPrice() * item.getQuantity(),
+                    product.get(0).getName(),
+                    product.get(0).getCategory(),
+                    product.get(0).getImgUrl()
+            ));
+        }
+        return resultItems;
+    }
+
+    public void addToCart(CartItem cartItem) {
+        String sql = "SELECT * FROM cart_emart WHERE userid="+cartItem.getUserId()+" AND productid="+cartItem.getProductId();
+        List<CartItem> cartItems = jdbcTemplate.query(sql, new CartRowMapper());
+        String sql1;
+        if (!cartItems.isEmpty()) {
+            sql1 = "UPDATE cart_emart SET quantity="+(cartItem.getQuantity() + cartItems.get(0).getQuantity())+
+                    " WHERE productid ="+cartItem.getProductId();
+        } else {
+            sql1 = "INSERT INTO cart_emart (userid, productid, quantity) VALUES (?, ?, ?)";
+        }
+        jdbcTemplate.update(sql1);
+
+    }
+
+    public void removeFromCart(Long userId, Long productId) {
+
+        String sql = "DELETE FROM cart_emart WHERE userid="+userId+" AND productid="+productId;
 
         jdbcTemplate.update(sql);
 

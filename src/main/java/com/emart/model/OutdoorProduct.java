@@ -1,4 +1,4 @@
-package com.emart.accessData;
+package com.emart.model;
 
 public class OutdoorProduct extends Product {
 

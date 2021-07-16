@@ -1,4 +1,4 @@
-package com.emart.accessData;
+package com.emart.model;
 
 public class ClothProduct extends Product {
 
