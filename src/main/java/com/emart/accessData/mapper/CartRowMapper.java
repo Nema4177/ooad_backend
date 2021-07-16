@@ -17,6 +17,6 @@ public class CartRowMapper implements RowMapper<CartItem> {
         cartItem.setQuantity(rs.getInt("quantity"));
         cartItem.setProductId(rs.getLong("productid"));
 
-        return null;
+        return cartItem;
     }
 }
