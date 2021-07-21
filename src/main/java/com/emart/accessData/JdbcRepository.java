@@ -9,6 +9,8 @@ import com.emart.model.CompleteCartItem;
 import com.emart.model.Product;
 import com.emart.model.User;
 import com.emart.payment.PaymentDetails;
+import com.emart.payment.impl.CreditCard;
+import com.emart.payment.impl.NetBankingDetails;
 import com.emart.payment.impl.PaypalDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -135,10 +137,27 @@ public class JdbcRepository {
     }
 
     public void addPayment(PaymentDetails paymentDetails) {
-        String sql = "INSERT INTO payment_emart (name, category, imgUrl, rating, price, quantity) VALUES (?, ?, ?, ?, ?, ?)";
-
-//        jdbcTemplate.update(sql, product.getName(), product.getCategory(), product.getImgUrl(),
-//                product.getRating(), product.getPrice(), product.getQuantity());
+        switch (paymentDetails.getType()) {
+            case 0:
+                String sql0 = "INSERT INTO payment_emart (userid, type, email, mobile) VALUES (?, ?, ?, ?)";
+                jdbcTemplate.update(sql0, paymentDetails.getUserId(), paymentDetails.getType(),
+                        ((PaypalDetails)paymentDetails).getEmail(), ((PaypalDetails)paymentDetails).getMobileNumber());
+                break;
+            case 1:
+                String sql1 = "INSERT INTO payment_emart (userid, type, name, account, bank) VALUES (?, ?, ?, ?, ?)";
+                jdbcTemplate.update(sql1, paymentDetails.getUserId(), paymentDetails.getType(),
+                        ((NetBankingDetails)paymentDetails).getUsername(),
+                        ((NetBankingDetails)paymentDetails).getAccountNumber(),
+                        ((NetBankingDetails)paymentDetails).getBankName());
+                break;
+            case 2:
+                String sql2 = "INSERT INTO payment_emart (userid, type, name, card, expiry) VALUES (?, ?, ?, ?, ?)";
+                jdbcTemplate.update(sql2, paymentDetails.getUserId(), paymentDetails.getType(),
+                        ((CreditCard)paymentDetails).getCardHoldername(),
+                        ((CreditCard)paymentDetails).getCardNumber(),
+                        ((CreditCard)paymentDetails).getExpiryDate());
+                break;
+        }
     }
 
     public void buy(long userId, long cartId, long paymentId) {

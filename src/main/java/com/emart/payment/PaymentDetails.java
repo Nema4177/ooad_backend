@@ -9,6 +9,11 @@ public abstract class PaymentDetails {
 	public PaymentDetails() {
 	}
 
+	public PaymentDetails(long userId, int type) {
+		this.userId = userId;
+		this.type = type;
+	}
+
 	public PaymentDetails(long paymentId, long userId, int type) {
 		this.paymentId = paymentId;
 		this.userId = userId;

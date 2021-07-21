@@ -18,6 +18,10 @@ public class NetBankingDetails extends PaymentDetails{
 		this.username = username;
 	}
 
+	public NetBankingDetails(long userId, int type) {
+		super(userId, type);
+	}
+
 	public NetBankingDetails() {
 	}
 

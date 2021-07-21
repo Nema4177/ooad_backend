@@ -14,6 +14,10 @@ public class CreditCard extends PaymentDetails{
 		this.expiryDate = expiryDate;
 	}
 
+	public CreditCard(long userId, int type) {
+		super(userId, type);
+	}
+
 	public CreditCard(long paymentId, long userId, int type) {
 		super(paymentId, userId, type);
 	}

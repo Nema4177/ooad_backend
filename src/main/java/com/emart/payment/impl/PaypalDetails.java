@@ -19,6 +19,10 @@ public class PaypalDetails extends PaymentDetails{
 		this.email = email;
 	}
 
+	public PaypalDetails(long userId, int type) {
+		super(userId, type);
+	}
+
 	public int getMobileNumber() {
 		return mobileNumber;
 	}
