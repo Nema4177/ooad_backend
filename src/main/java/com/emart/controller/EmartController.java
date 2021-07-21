@@ -134,7 +134,7 @@ public class EmartController {
             case 0:
                 paymentDetails = new PaypalDetails(userId, type);
                 ((PaypalDetails)paymentDetails).setEmail((String) jsonObject.get("email"));
-                ((PaypalDetails)paymentDetails).setMobileNumber((int) jsonObject.get("mobile"));
+                ((PaypalDetails)paymentDetails).setMobileNumber((int) jsonObject.get("mobileNumber"));
                 break;
             case 1:
                 paymentDetails = new NetBankingDetails(userId, type);
