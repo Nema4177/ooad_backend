@@ -2,6 +2,7 @@ package com.emart.service;
 
 import com.emart.model.*;
 import com.emart.accessData.JdbcRepository;
+import com.emart.payment.PaymentDetails;
 import com.emart.session.EmartSession;
 import com.emart.utils.Constants;
 import org.json.simple.JSONArray;
@@ -173,6 +174,48 @@ public class EmartService {
             jdbcRepository.removeFromCart(userId, productId);
             response.put(Constants.response_status_key, "success");
             response.put(Constants.response_message_key, "product updated");
+        } catch (Exception e) {
+            response.put(Constants.response_status_key, "failure");
+            response.put(Constants.response_message_key, e.getMessage());
+        }
+        return response;
+    }
+
+    public JSONObject getPayments(Long userId) {
+        JSONObject response = new JSONObject();
+        try {
+            JSONArray result = new JSONArray();
+            List<PaymentDetails> resultList = jdbcRepository.getPayments(userId);
+            result.addAll(resultList);
+            response.put(Constants.response_status_key, "success");
+            response.put(Constants.response_message_key, "success");
+            response.put("payments", result);
+        } catch (Exception e) {
+            response.put(Constants.response_status_key, "failure");
+            response.put(Constants.response_message_key, e.getMessage());
+        }
+        return response;
+    }
+
+    public JSONObject addPayment(PaymentDetails paymentDetails) {
+        JSONObject response = new JSONObject();
+        try {
+            jdbcRepository.addPayment(paymentDetails);
+            response.put(Constants.response_status_key, "success");
+            response.put(Constants.response_message_key, "payment added");
+        } catch (Exception e) {
+            response.put(Constants.response_status_key, "failure");
+            response.put(Constants.response_message_key, e.getMessage());
+        }
+        return response;
+    }
+
+    public JSONObject buy(long userId, long cartId, long paymentId) {
+        JSONObject response = new JSONObject();
+        try {
+            jdbcRepository.buy(userId, cartId, paymentId);
+            response.put(Constants.response_status_key, "success");
+            response.put(Constants.response_message_key, "Items bought");
         } catch (Exception e) {
             response.put(Constants.response_status_key, "failure");
             response.put(Constants.response_message_key, e.getMessage());

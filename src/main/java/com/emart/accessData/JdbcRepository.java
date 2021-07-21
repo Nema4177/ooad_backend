@@ -1,12 +1,15 @@
 package com.emart.accessData;
 
 import com.emart.accessData.mapper.CartRowMapper;
+import com.emart.accessData.mapper.PaymentRowMapper;
 import com.emart.accessData.mapper.ProductRowMapper;
 import com.emart.accessData.mapper.UserRowMapper;
 import com.emart.model.CartItem;
 import com.emart.model.CompleteCartItem;
 import com.emart.model.Product;
 import com.emart.model.User;
+import com.emart.payment.PaymentDetails;
+import com.emart.payment.impl.PaypalDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -123,5 +126,23 @@ public class JdbcRepository {
 
         jdbcTemplate.update(sql);
 
+    }
+
+    public List<PaymentDetails> getPayments(Long userId) {
+        String sql = "Select * FROM payment_emart WHERE userid="+userId;
+        List<PaymentDetails> resultItems = jdbcTemplate.query(sql, new PaymentRowMapper());
+        return resultItems;
+    }
+
+    public void addPayment(PaymentDetails paymentDetails) {
+        String sql = "INSERT INTO payment_emart (name, category, imgUrl, rating, price, quantity) VALUES (?, ?, ?, ?, ?, ?)";
+
+//        jdbcTemplate.update(sql, product.getName(), product.getCategory(), product.getImgUrl(),
+//                product.getRating(), product.getPrice(), product.getQuantity());
+    }
+
+    public void buy(long userId, long cartId, long paymentId) {
+
+        removeFromCart(userId, cartId);
     }
 }

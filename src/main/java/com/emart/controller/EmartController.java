@@ -4,6 +4,10 @@ import com.emart.model.CartItem;
 import com.emart.model.Product;
 import com.emart.accessData.ProductFactory;
 import com.emart.model.User;
+import com.emart.payment.PaymentDetails;
+import com.emart.payment.impl.CreditCard;
+import com.emart.payment.impl.NetBankingDetails;
+import com.emart.payment.impl.PaypalDetails;
 import com.emart.service.EmartService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +115,51 @@ public class EmartController {
     public ResponseEntity<JSONObject> removeFromCart(@RequestParam String username, @RequestBody CartItem cartItem) {
 
         JSONObject response = emartService.removeFromCart(cartItem.getUserId(), cartItem.getProductId());
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/getPayments")
+    public ResponseEntity<JSONObject> getPayments(@RequestParam String username, @RequestParam Long userId) {
+        JSONObject response = emartService.getPayments(userId);
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/addPayment")
+    public ResponseEntity<JSONObject> addPayment(@RequestParam String username, @RequestBody JSONObject jsonObject) {
+
+        int type = Integer.parseInt((String) jsonObject.get("type"));
+        long userId = Long.parseLong((String) jsonObject.get("userId"));
+        long paymentId = Long.parseLong((String) jsonObject.get("paymentId"));
+        PaymentDetails paymentDetails;
+        switch (type){
+            case 0:
+                paymentDetails = new PaypalDetails(paymentId, userId, type);
+                ((PaypalDetails)paymentDetails).setEmail((String) jsonObject.get("email"));
+                ((PaypalDetails)paymentDetails).setMobileNumber(Integer.parseInt((String) jsonObject.get("mobile")));
+                break;
+            case 1:
+                paymentDetails = new NetBankingDetails(paymentId, userId, type);
+                ((NetBankingDetails)paymentDetails).setBankName((String) jsonObject.get("bank"));
+                ((NetBankingDetails)paymentDetails).setUsername((String) jsonObject.get("name"));
+                ((NetBankingDetails)paymentDetails).setAccountNumber(Long.parseLong((String) jsonObject.get("account")));
+                break;
+            default:
+                paymentDetails = new CreditCard(paymentId, userId, type);
+                ((CreditCard)paymentDetails).setCardNumber(Long.parseLong((String) jsonObject.get("card")));
+                ((CreditCard)paymentDetails).setCardHoldername((String) jsonObject.get("name"));
+                ((CreditCard)paymentDetails).setExpiryDate((String) jsonObject.get("expiry"));
+                break;
+        }
+        JSONObject response = emartService.addPayment(paymentDetails);
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/buy")
+    public ResponseEntity<JSONObject> buy(@RequestParam String username, @RequestBody JSONObject jsonObject) {
+        long cartId = Long.parseLong((String) jsonObject.get("cartId"));
+        long userId = Long.parseLong((String) jsonObject.get("userId"));
+        long paymentId = Long.parseLong((String) jsonObject.get("paymentId"));
+        JSONObject response = emartService.buy(userId, cartId, paymentId);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
 }
