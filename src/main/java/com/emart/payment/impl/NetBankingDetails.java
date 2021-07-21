@@ -6,16 +6,16 @@ public class NetBankingDetails extends PaymentDetails{
 
 	private String bankName;
 	private long accountNumber;
-	private String username;
+	private String name;
 
 	public NetBankingDetails(long paymentId, long userId, int type) {
 		super(paymentId, userId, type);
 	}
 
-	public NetBankingDetails(String bankName, long accountNumber, String username) {
+	public NetBankingDetails(String bankName, long accountNumber, String name) {
 		this.bankName = bankName;
 		this.accountNumber = accountNumber;
-		this.username = username;
+		this.name = name;
 	}
 
 	public NetBankingDetails(long userId, int type) {
@@ -41,12 +41,12 @@ public class NetBankingDetails extends PaymentDetails{
 		this.accountNumber = accountNumber;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getName() {
+		return name;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override

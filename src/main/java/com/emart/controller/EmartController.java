@@ -138,15 +138,15 @@ public class EmartController {
                 break;
             case 1:
                 paymentDetails = new NetBankingDetails(userId, type);
-                ((NetBankingDetails)paymentDetails).setBankName((String) jsonObject.get("bank"));
-                ((NetBankingDetails)paymentDetails).setUsername((String) jsonObject.get("name"));
-                ((NetBankingDetails)paymentDetails).setAccountNumber((int) jsonObject.get("account"));
+                ((NetBankingDetails)paymentDetails).setBankName((String) jsonObject.get("bankName"));
+                ((NetBankingDetails)paymentDetails).setName((String) jsonObject.get("name"));
+                ((NetBankingDetails)paymentDetails).setAccountNumber((int) jsonObject.get("accountNumber"));
                 break;
             default:
                 paymentDetails = new CreditCard(userId, type);
-                ((CreditCard)paymentDetails).setCardNumber((int) jsonObject.get("card"));
-                ((CreditCard)paymentDetails).setCardHoldername((String) jsonObject.get("name"));
-                ((CreditCard)paymentDetails).setExpiryDate((String) jsonObject.get("expiry"));
+                ((CreditCard)paymentDetails).setCardNumber((int) jsonObject.get("cardNumber"));
+                ((CreditCard)paymentDetails).setName((String) jsonObject.get("name"));
+                ((CreditCard)paymentDetails).setExpiryDate((String) jsonObject.get("expiryDate"));
                 break;
         }
         JSONObject response = emartService.addPayment(paymentDetails);

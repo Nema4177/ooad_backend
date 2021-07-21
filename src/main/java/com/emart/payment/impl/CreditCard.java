@@ -4,12 +4,12 @@ import com.emart.payment.PaymentDetails;
 
 public class CreditCard extends PaymentDetails{
 	
-	private String cardHoldername;
+	private String name;
 	private long cardNumber;
 	private String expiryDate;
 		
-	public CreditCard(String cardHoldername, long cardNumber, String expiryDate) {
-		this.cardHoldername = cardHoldername;
+	public CreditCard(String name, long cardNumber, String expiryDate) {
+		this.name = name;
 		this.cardNumber = cardNumber;
 		this.expiryDate = expiryDate;
 	}
@@ -25,12 +25,12 @@ public class CreditCard extends PaymentDetails{
 	public CreditCard() {
 	}
 
-	public String getCardHoldername() {
-		return cardHoldername;
+	public String getName() {
+		return name;
 	}
 
-	public void setCardHoldername(String cardHoldername) {
-		this.cardHoldername = cardHoldername;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public long getCardNumber() {

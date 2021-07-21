@@ -146,14 +146,14 @@ public class JdbcRepository {
             case 1:
                 String sql1 = "INSERT INTO payment_emart (userid, type, name, account, bank) VALUES (?, ?, ?, ?, ?)";
                 jdbcTemplate.update(sql1, paymentDetails.getUserId(), paymentDetails.getType(),
-                        ((NetBankingDetails)paymentDetails).getUsername(),
+                        ((NetBankingDetails)paymentDetails).getName(),
                         ((NetBankingDetails)paymentDetails).getAccountNumber(),
                         ((NetBankingDetails)paymentDetails).getBankName());
                 break;
             case 2:
                 String sql2 = "INSERT INTO payment_emart (userid, type, name, card, expiry) VALUES (?, ?, ?, ?, ?)";
                 jdbcTemplate.update(sql2, paymentDetails.getUserId(), paymentDetails.getType(),
-                        ((CreditCard)paymentDetails).getCardHoldername(),
+                        ((CreditCard)paymentDetails).getName(),
                         ((CreditCard)paymentDetails).getCardNumber(),
                         ((CreditCard)paymentDetails).getExpiryDate());
                 break;

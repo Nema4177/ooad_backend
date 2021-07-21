@@ -27,13 +27,13 @@ public class PaymentRowMapper implements RowMapper<PaymentDetails> {
             case 1:
                 paymentDetails = new NetBankingDetails(paymentId, userId, type);
                 ((NetBankingDetails)paymentDetails).setBankName(rs.getString("bank"));
-                ((NetBankingDetails)paymentDetails).setUsername(rs.getString("name"));
+                ((NetBankingDetails)paymentDetails).setName(rs.getString("name"));
                 ((NetBankingDetails)paymentDetails).setAccountNumber(rs.getLong("account"));
                 break;
             default:
                 paymentDetails = new CreditCard(paymentId, userId, type);
                 ((CreditCard)paymentDetails).setCardNumber(rs.getLong("card"));
-                ((CreditCard)paymentDetails).setCardHoldername(rs.getString("name"));
+                ((CreditCard)paymentDetails).setName(rs.getString("name"));
                 ((CreditCard)paymentDetails).setExpiryDate(rs.getString("expiry"));
                 break;
         }
