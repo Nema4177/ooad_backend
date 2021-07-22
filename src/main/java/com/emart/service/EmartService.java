@@ -75,12 +75,17 @@ public class EmartService {
         return response;
     }
 
-    public JSONObject addProduct(Product product) {
+    public JSONObject addProduct(String username,Product product) {
 		JSONObject response = new JSONObject();
 		try {
-			jdbcRepository.insertProduct(product);
-			response.put(Constants.response_status_key, "success");
-			response.put(Constants.response_message_key, "product added");
+			if(username.equalsIgnoreCase("admin")){
+				Admin.getInstance().addProduct(product);
+				response.put(Constants.response_status_key, "success");
+				response.put(Constants.response_message_key, "product added");
+			}else {
+				response.put(Constants.response_status_key, "failure");
+				response.put(Constants.response_message_key, "Only admin is allowed to add a product");
+			}
 		} catch (Exception e) {
 			response.put(Constants.response_status_key, "failure");
 			response.put(Constants.response_message_key, e.getMessage());
@@ -104,12 +109,17 @@ public class EmartService {
         return response;
     }
 
-    public JSONObject removeProduct(Long productId, int quantity) {
+    public JSONObject removeProduct(String username,Long productId, int quantity) {
         JSONObject response = new JSONObject();
         try {
-            jdbcRepository.removeProduct(productId, quantity);
-            response.put(Constants.response_status_key, "success");
-            response.put(Constants.response_message_key, "product removed");
+        	if(username.equalsIgnoreCase("admin")){
+				Admin.getInstance().removeProduct(productId,quantity);
+				response.put(Constants.response_status_key, "success");
+				response.put(Constants.response_message_key, "product added");
+			}else {
+				response.put(Constants.response_status_key, "failure");
+				response.put(Constants.response_message_key, "Only admin is allowed to remove a product");
+			}
         } catch (Exception e) {
             response.put(Constants.response_status_key, "failure");
             response.put(Constants.response_message_key, e.getMessage());
@@ -117,12 +127,17 @@ public class EmartService {
         return response;
     }
 
-    public JSONObject changePrice(Long productId, double price) {
+    public JSONObject changePrice(String username,Long productId, double price) {
         JSONObject response = new JSONObject();
         try {
-            jdbcRepository.changePrice(productId, price);
-            response.put(Constants.response_status_key, "success");
-            response.put(Constants.response_message_key, "price changed");
+        	if(username.equalsIgnoreCase("admin")){
+				Admin.getInstance().changePrice(productId,price);
+				response.put(Constants.response_status_key, "success");
+				response.put(Constants.response_message_key, "product added");
+			}else {
+				response.put(Constants.response_status_key, "failure");
+				response.put(Constants.response_message_key, "Only admin is allowed to modify a product");
+			};
         } catch (Exception e) {
             response.put(Constants.response_status_key, "failure");
             response.put(Constants.response_message_key, e.getMessage());
@@ -130,12 +145,17 @@ public class EmartService {
         return response;
     }
 
-    public JSONObject changeQuantity(Long productId, int quantity) {
+    public JSONObject changeQuantity(String username,Long productId, int quantity) {
         JSONObject response = new JSONObject();
         try {
-            jdbcRepository.changeQuantity(productId, quantity);
-            response.put(Constants.response_status_key, "success");
-            response.put(Constants.response_message_key, "quantity changed");
+        	if(username.equalsIgnoreCase("admin")){
+				Admin.getInstance().changeQuantity(productId,quantity);
+				response.put(Constants.response_status_key, "success");
+				response.put(Constants.response_message_key, "product added");
+			}else {
+				response.put(Constants.response_status_key, "failure");
+				response.put(Constants.response_message_key, "Only admin is allowed to modify a product");
+			};
         } catch (Exception e) {
             response.put(Constants.response_status_key, "failure");
             response.put(Constants.response_message_key, e.getMessage());
@@ -235,7 +255,7 @@ public class EmartService {
         return false;
     }
 
-	public JSONObject addProductDecorator(int productId, String decorator) {
+	public JSONObject addProductDecorator(String username,int productId, String decorator) {
 		Product product = jdbcRepository.getProduct(productId);
         JSONObject response = new JSONObject();
 		Product productDecorator=null;
@@ -246,9 +266,14 @@ public class EmartService {
 		}
 		if(productDecorator!=null)
 		{
-			jdbcRepository.updateProduct(productId, productDecorator);
-			response.put(Constants.response_status_key, "success");
-            response.put(Constants.response_message_key, "Decorator applied successfully");
+			if(username.equalsIgnoreCase("admin")) {
+				Admin.getInstance().updateProduct(productId, productDecorator);
+				response.put(Constants.response_status_key, "success");
+	            response.put(Constants.response_message_key, "Decorator applied successfully");
+			}else {
+				response.put(Constants.response_status_key, "failure");
+				response.put(Constants.response_message_key, "Only admin is allowed to modify a product");
+			}
 		}
 		else {
 			response.put(Constants.response_status_key, "failure");

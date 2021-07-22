@@ -64,7 +64,7 @@ public class EmartController {
         product.setPrice((double) jsonObject.get("price"));
         product.setQuantity((int) jsonObject.get("quantity"));
         product.setRating((double) jsonObject.get("rating"));
-        JSONObject response = emartService.addProduct(product);
+        JSONObject response = emartService.addProduct(username,product);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
     
@@ -73,7 +73,7 @@ public class EmartController {
 
         String decorator = (String) jsonObject.get("decorator");
         int productId = (int) jsonObject.get("productId");
-        JSONObject response = emartService.addProductDecorator(productId,decorator);
+        JSONObject response = emartService.addProductDecorator(username,productId,decorator);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
     
@@ -84,7 +84,7 @@ public class EmartController {
         long productId = Long.parseLong((String) jsonObject.get("productId"));
         int quantity = (int) jsonObject.get("quantity");
 
-        JSONObject response = emartService.removeProduct(productId, quantity);
+        JSONObject response = emartService.removeProduct(username,productId, quantity);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
 
@@ -94,7 +94,7 @@ public class EmartController {
         long productId = Long.parseLong((String) jsonObject.get("productId"));
         double price = (double) jsonObject.get("price");
 
-        JSONObject response = emartService.changePrice(productId, price);
+        JSONObject response = emartService.changePrice(username,productId, price);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
 
@@ -104,7 +104,7 @@ public class EmartController {
         long productId = Long.parseLong((String) jsonObject.get("productId"));
         int quantity = (int) jsonObject.get("quantity");
 
-        JSONObject response = emartService.changeQuantity(productId, quantity);
+        JSONObject response = emartService.changeQuantity(username,productId, quantity);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
 
