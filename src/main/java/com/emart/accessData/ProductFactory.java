@@ -1,10 +1,12 @@
 package com.emart.accessData;
 
-import com.emart.model.ClothProduct;
-import com.emart.model.ElectronicProduct;
-import com.emart.model.GroceriesProduct;
-import com.emart.model.Product;
+import com.emart.model.*;
 
+import java.awt.print.Book;
+
+/**
+ * To demonstrate the Factory pattern
+ */
 public class ProductFactory {
 
     public Product getProduct(String category) {
@@ -17,11 +19,11 @@ public class ProductFactory {
         } else if (category.equalsIgnoreCase("Clothes")) {
             return new ClothProduct();
         } else if (category.equalsIgnoreCase("Books")) {
-            return new ClothProduct();
+            return new BookProduct();
         } else if (category.equalsIgnoreCase("Outdoor")) {
-            return new ClothProduct();
+            return new OutdoorProduct();
         } else if (category.equalsIgnoreCase("Pets")) {
-            return new ClothProduct();
+            return new PetProducts();
         } else {
             return null;
         }

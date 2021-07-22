@@ -2,6 +2,9 @@ package com.emart.model;
 
 import com.emart.accessData.JdbcRepository;
 
+/**
+ * To demonstrate the singleton pattern
+ */
 public class Admin {
 	
 	public static Admin admin = new Admin();

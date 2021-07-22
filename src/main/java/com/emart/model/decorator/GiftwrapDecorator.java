@@ -2,6 +2,9 @@ package com.emart.model.decorator;
 
 import com.emart.model.Product;
 
+/**
+ * To demonstrate the decorator pattern and add gift wrapping ot the product
+ */
 public class GiftwrapDecorator extends ProductDecorator{
 	
 	Product product;

@@ -2,6 +2,9 @@ package com.emart.model.decorator;
 
 import com.emart.model.Product;
 
+/**
+ * To demonstrate the decorator pattern and add discount ot the product
+ */
 public class DiscountDecorator extends ProductDecorator{
 	
 	Product product;

@@ -6,6 +6,9 @@ import org.json.simple.JSONObject;
 import com.emart.payment.PaymentDetails;
 import com.emart.utils.Constants;
 
+/**
+ * represents user
+ */
 public class User {
 
 	private Long userId;

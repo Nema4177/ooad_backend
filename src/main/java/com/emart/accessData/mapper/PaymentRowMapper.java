@@ -9,6 +9,9 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Mapper class for payment table
+ */
 public class PaymentRowMapper implements RowMapper<PaymentDetails> {
 
     @Override

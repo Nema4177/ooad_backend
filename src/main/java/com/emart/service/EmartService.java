@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class to connect controller and JDBC repo
+ */
 @Service
 public class EmartService {
 

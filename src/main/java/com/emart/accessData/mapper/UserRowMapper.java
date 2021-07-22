@@ -9,6 +9,9 @@ import com.emart.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Mapper class for user table
+ */
 public class UserRowMapper implements RowMapper<User> {
 
     @Override

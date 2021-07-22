@@ -10,6 +10,9 @@ import com.emart.model.Product;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Mapper class for product table
+ */
 public class ProductRowMapper implements RowMapper<Product> {
 
     private final ProductFactory productFactory = new ProductFactory();
