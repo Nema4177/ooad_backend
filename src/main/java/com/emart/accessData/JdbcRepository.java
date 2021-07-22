@@ -130,6 +130,14 @@ public class JdbcRepository {
 
     }
 
+    public void clearCart(Long userId) {
+
+        String sql = "DELETE FROM cart_emart WHERE userid="+userId;
+
+        jdbcTemplate.update(sql);
+
+    }
+
     public List<PaymentDetails> getPayments(Long userId) {
         String sql = "Select * FROM payment_emart WHERE userid="+userId;
         List<PaymentDetails> resultItems = jdbcTemplate.query(sql, new PaymentRowMapper());
@@ -160,8 +168,8 @@ public class JdbcRepository {
         }
     }
 
-    public void buy(long userId, long cartId, long paymentId) {
+    public void makePurchase(long userId) {
 
-        removeFromCart(userId, cartId);
+        clearCart(userId);
     }
 }

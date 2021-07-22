@@ -26,7 +26,7 @@ public class EmartService {
             if (user.getName().equals(username) && user.getPassword().equals(password)) {
                 EmartSession.getInstance().getActiveUsers().add(user);
                 response.put(Constants.response_status_key, "success");
-                response.put(Constants.response_message_key, "success");
+                response.put(Constants.response_message_key, "login success");
                 response.put("userId", user.getUserId());
                 response.put("username", user.getName());
                 response.put("type", user.getType());
@@ -46,7 +46,7 @@ public class EmartService {
         try {
             jdbcRepository.insertUser(user);
             response.put(Constants.response_status_key, "success");
-            response.put(Constants.response_message_key, "success");
+            response.put(Constants.response_message_key, "register success");
             response.put("username", user.getName());
         } catch (Exception e) {
             response.put(Constants.response_status_key, "failure");
@@ -131,7 +131,7 @@ public class EmartService {
         try {
             jdbcRepository.changeQuantity(productId, quantity);
             response.put(Constants.response_status_key, "success");
-            response.put(Constants.response_message_key, "product updated");
+            response.put(Constants.response_message_key, "quantity changed");
         } catch (Exception e) {
             response.put(Constants.response_status_key, "failure");
             response.put(Constants.response_message_key, e.getMessage());
@@ -160,7 +160,7 @@ public class EmartService {
         try {
             jdbcRepository.addToCart(cartItem);
             response.put(Constants.response_status_key, "success");
-            response.put(Constants.response_message_key, "product updated");
+            response.put(Constants.response_message_key, "product added");
         } catch (Exception e) {
             response.put(Constants.response_status_key, "failure");
             response.put(Constants.response_message_key, e.getMessage());
@@ -210,10 +210,10 @@ public class EmartService {
         return response;
     }
 
-    public JSONObject buy(long userId, long cartId, long paymentId) {
+    public JSONObject makePurchase(long userId, long paymentId, double amount) {
         JSONObject response = new JSONObject();
         try {
-            jdbcRepository.buy(userId, cartId, paymentId);
+            jdbcRepository.makePurchase(userId);
             response.put(Constants.response_status_key, "success");
             response.put(Constants.response_message_key, "Items bought");
         } catch (Exception e) {

@@ -153,12 +153,12 @@ public class EmartController {
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/buy")
-    public ResponseEntity<JSONObject> buy(@RequestParam String username, @RequestBody JSONObject jsonObject) {
-        long cartId = Long.parseLong((String) jsonObject.get("cartId"));
-        long userId = Long.parseLong((String) jsonObject.get("userId"));
-        long paymentId = Long.parseLong((String) jsonObject.get("paymentId"));
-        JSONObject response = emartService.buy(userId, cartId, paymentId);
+    @PostMapping(path = "/makePurchase")
+    public ResponseEntity<JSONObject> makePurchase(@RequestParam String username, @RequestBody JSONObject jsonObject) {
+        long userId = (int) jsonObject.get("userId");
+        long paymentId = (int) jsonObject.get("paymentId");
+        double amount = (double) jsonObject.get("amount");
+        JSONObject response = emartService.makePurchase(userId, paymentId, amount);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
 }
