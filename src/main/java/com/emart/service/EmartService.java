@@ -1,6 +1,9 @@
 package com.emart.service;
 
 import com.emart.model.*;
+import com.emart.model.decorator.DiscountDecorator;
+import com.emart.model.decorator.GiftwrapDecorator;
+import com.emart.model.decorator.ProductDecorator;
 import com.emart.accessData.JdbcRepository;
 import com.emart.payment.PaymentDetails;
 import com.emart.session.EmartSession;
@@ -84,6 +87,7 @@ public class EmartService {
 		}
 		return response;
 	}
+    
 
     public JSONObject getCategories() {
         JSONArray categories = new JSONArray();
@@ -230,4 +234,26 @@ public class EmartService {
         }
         return false;
     }
+
+	public JSONObject addProductDecorator(int productId, String decorator) {
+		Product product = jdbcRepository.getProduct(productId);
+        JSONObject response = new JSONObject();
+		Product productDecorator=null;
+		if(decorator.equals("discount")) {
+			productDecorator = new DiscountDecorator(product);
+		}else if(decorator.equals("gift")) {
+			productDecorator = new GiftwrapDecorator(product);
+		}
+		if(productDecorator!=null)
+		{
+			jdbcRepository.updateProduct(productId, productDecorator);
+			response.put(Constants.response_status_key, "success");
+            response.put(Constants.response_message_key, "Decorator applied successfully");
+		}
+		else {
+			response.put(Constants.response_status_key, "failure");
+	        response.put(Constants.response_message_key, "No matching decorator");
+		}
+		return response;
+	}
 }

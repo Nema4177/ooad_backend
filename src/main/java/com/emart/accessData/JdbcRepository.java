@@ -8,6 +8,7 @@ import com.emart.model.CartItem;
 import com.emart.model.CompleteCartItem;
 import com.emart.model.Product;
 import com.emart.model.User;
+import com.emart.model.decorator.ProductDecorator;
 import com.emart.payment.PaymentDetails;
 import com.emart.payment.impl.CreditCard;
 import com.emart.payment.impl.NetBankingDetails;
@@ -47,6 +48,15 @@ public class JdbcRepository {
         List<Product> products = jdbcTemplate.query(sql, new ProductRowMapper());
         return products;
     }
+    
+    public Product getProduct(int productid) {
+        String sql = "SELECT * FROM product_emart WHERE productid =\'" + productid + "\'";
+        List<Product> products = jdbcTemplate.query(sql, new ProductRowMapper());
+        if(products.size() == 1)
+        	return products.get(0);
+        else
+        	return null;
+    }
 
     public void insertProduct(Product product) {
 
@@ -56,7 +66,16 @@ public class JdbcRepository {
                 product.getRating(), product.getPrice(), product.getQuantity());
 
     }
+    
+    public void updateProduct(int productid,Product product) {
 
+        String sql = "UPDATE product_emart SET name="+product.getName()+",category="+product.getCategory()+", imgUrl="+product.getImgUrl()+",rating="+product.getRating()+",price="+product.getPrice()+", quantity="+product.getQuantity()+"WHERE productid="+productid;
+
+        jdbcTemplate.update(sql, product.getName(), product.getCategory(), product.getImgUrl(),
+                product.getRating(), product.getPrice(), product.getQuantity());
+
+    }
+    
     public void removeProduct(Long productId, int quantity) {
 
         String sql = "SELECT * FROM product_emart WHERE productid ="+productId;

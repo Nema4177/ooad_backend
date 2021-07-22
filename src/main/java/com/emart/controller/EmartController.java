@@ -67,6 +67,16 @@ public class EmartController {
         JSONObject response = emartService.addProduct(product);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
+    
+    @PostMapping(path = "/addProductDecorator")
+    public ResponseEntity<JSONObject> addProductDecorator(@RequestParam String username, @RequestBody JSONObject jsonObject) {
+
+        String decorator = (String) jsonObject.get("decorator");
+        int productId = (int) jsonObject.get("productId");
+        JSONObject response = emartService.addProductDecorator(productId,decorator);
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
+    
 
     @PostMapping(path = "/removeProduct")
     public ResponseEntity<JSONObject> removeProduct(@RequestParam String username, @RequestBody JSONObject jsonObject) {
