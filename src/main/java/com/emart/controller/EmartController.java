@@ -44,6 +44,15 @@ public class EmartController {
         JSONObject response = emartService.login(username, password);
         return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
     }
+    
+    @PostMapping(path = "/logout")
+    public ResponseEntity<JSONObject> logoutuser(@RequestBody JSONObject loginDetails) {
+
+        String username = (String) loginDetails.get("username");
+        String password = (String) loginDetails.get("password");
+        JSONObject response = emartService.logout(username, password);
+        return new ResponseEntity<JSONObject>(response, HttpStatus.OK);
+    }
 
     /**
      * API to get categories

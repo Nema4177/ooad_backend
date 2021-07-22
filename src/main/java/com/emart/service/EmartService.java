@@ -284,4 +284,12 @@ public class EmartService {
 		}
 		return response;
 	}
+
+	public JSONObject logout(String username, String password) {
+		JSONObject response = new JSONObject();
+		EmartSession.getInstance().getActiveUsers().remove(username);
+		response.put(Constants.response_status_key, "success");
+        response.put(Constants.response_message_key, "Decorator applied successfully");
+		return response;
+	}
 }
